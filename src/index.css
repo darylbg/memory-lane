@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.primary-button {
+  background-color: black;
+  color: white;
+  border: 3px solid black;
+}
+
+.primary-button:hover {
+  background-color: white;
+  color: black;
+}
+
+.primary-button-active {
+  background-color: white;
+  color: black;
+  border: 3px solid black;
+}
+
+.secondary-button:disabled {
+  background-color: white;
+  color: gray;
+  border: 3px solid gray;
+}
+
+.secondary-button:disabled:hover {
+  background-color: white;
+  color: gray;
+  border: 3px solid gray;
+}
+
+.secondary-button {
+  background-color: white;
+  color: black;
+  border: 3px solid black;
+}
+
+.secondary-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.back-button {
+  padding: 0;
+}
+
