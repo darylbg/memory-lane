@@ -47,7 +47,33 @@ body {
   color: white;
 }
 
+.thirdary-button {
+  height: fit-content !important;
+  background-color: white;
+  color: black;
+}
+
 .back-button {
   padding: 0;
+}
+
+.navlink-disabled {
+  border: 3px solid gray;
+  color: gray;
+}
+
+.navlink-disabled:hover {
+  cursor: default;
+  color: gray;
+  background-color: white;
+}
+
+.navlink-disabled:hover img {
+  transform: scale(1) !important;
+}
+
+.large-box-shadow {
+  box-shadow: hsl(206 22% 7% / 35%) 0px 0px 38px -10px,
+  hsl(206 22% 7% / 20%) 0px 0px 20px -15px;
 }
 

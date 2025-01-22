@@ -7,6 +7,7 @@ import GameThemes from "./Components/GameThemes";
 import GameComplete from "./Components/GameComplete";
 import GamePlay from "./Components/GamePlay";
 import GameWelcome from "./Components/GameWelcome";
+import BottomBar from "./Components/BottomBar";
 
 function App() {
   const { theme, switchTheme } = useGame();
@@ -21,7 +22,7 @@ function App() {
           <TopBar />
           <div className="flex flex-1 flex-col justify-center">
             <Routes>
-              <Route path="" element={<GameWelcome/>} />
+              <Route path="" element={<GameWelcome />} />
               <Route path="/image-upload" element={<GameImageUpload />} />
               <Route path="/themes" element={<GameThemes />} />
               <Route path="/play" element={<GamePlay />} />
@@ -29,7 +30,7 @@ function App() {
             </Routes>
           </div>
           {/* bottom bar */}
-          <div>bottom bar</div>
+          <BottomBar />
         </div>
       </div>
     </Router>

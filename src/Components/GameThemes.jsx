@@ -3,6 +3,7 @@ import ButtonComponent from "./Primitive Components/ButtonComponent";
 import { NavLinkComponent } from "./Primitive Components/ButtonComponent";
 import check_icon from "../Assets/Icons/check_icon.png";
 import back_icon from "../Assets/Icons/back_icon.png";
+import ModalComponent from "./Primitive Components/ModalComponent";
 import { useGame } from "../GameContext";
 
 export default function GameThemes() {
@@ -11,9 +12,9 @@ export default function GameThemes() {
     console.log("tested");
   };
   return (
-    <div className="flex flex-col gap-10 self-center p-5 bg-white bg-opacity-90 rounded-xl w-[400px] max-w-100vw">
+    <ModalComponent>
       <div className="flex items-center ">
-      <NavLinkComponent to="/" icon={back_icon} custom_class="back-button" />
+        <NavLinkComponent to="/" icon={back_icon} custom_class="back-button" />
         <h2 className="text-lg font-medium text-balance text-center translate-x-1/2">
           SWITCH THEMES
         </h2>
@@ -49,6 +50,6 @@ export default function GameThemes() {
           }`}
         />
       </div>
-    </div>
+    </ModalComponent>
   );
 }

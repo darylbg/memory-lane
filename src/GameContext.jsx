@@ -7,9 +7,21 @@ export const GameProvider = ({ children }) => {
   const [theme, setTheme] = useState(getTheme("violet_evergarden"));
   const [gameState, setGameState] = useState("not_started");
   const [allImages, setAllImages] = useState([]);
+  const [shuffledGameSet, setShuffledGameSet] = useState([]);
+  const [orderedGameSet, SetOrderedGameSet] = useState([]);
   const [score, setScore] = useState(0);
   const [hints, setHints] = useState([]);
 
+  // set shuffled set of up to 10 images
+  const setupGame = () => {
+    if (allImages.length <= 1) {
+      console.log("not enough images")
+      return;
+    } else {
+      console.log("game start");
+      setGameState("playing");
+    }
+  }
   // Function to reset the game
   const resetGame = () => {
     setGameState("not_started");
@@ -44,6 +56,7 @@ export const GameProvider = ({ children }) => {
         setHints,
         resetGame,
         addHint,
+        setupGame
       }}
     >
       {children}
