@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 export default function ButtonComponent({
@@ -9,10 +9,17 @@ export default function ButtonComponent({
   custom_class,
   disabled,
 }) {
+  const handleClick = (event) => {
+    event.stopPropagation(); // Prevent the event from propagating
+    if (!disabled && action) {
+      action(event);
+    }
+  };
+
   return (
     <button
       disabled={disabled}
-      onClick={disabled ? null : action}
+      onClick={handleClick}
       style={{
         borderRadius: rounded ? "50px" : "4px",
         justifyContent: icon ? "space-between" : "center",
@@ -41,12 +48,19 @@ export function NavLinkComponent({
   custom_class,
   disabled,
 }) {
+  const handleClick = (event) => {
+    event.stopPropagation(); // Prevent the event from propagating
+    if (!disabled && action) {
+      action(event);
+    }
+  };
+
   return (
     <NavLink
-      onClick={action}
+      onClick={handleClick}
       to={disabled ? "" : `${to}`}
       style={{ borderRadius: rounded ? "50px" : "4px" }}
-      className={`group flex gap-2  h-fit justify-between items-center py-1 px-2 font-semibold ${custom_class} ${
+      className={`group flex gap-2 h-fit justify-between items-center py-1 px-2 font-semibold ${custom_class} ${
         disabled && "navlink-disabled"
       }`}
     >

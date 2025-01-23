@@ -1,8 +1,9 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import polaroid_frame from "../Assets/Images/polaroid-frame.png";
 
-export const SortableItem = ({ id, item }) => {
+export const SortableItem = ({ id, item, index }) => {
   const {
     attributes,
     listeners,
@@ -14,28 +15,29 @@ export const SortableItem = ({ id, item }) => {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition: transition || "transform 150ms ease-in-out",
     zIndex: isDragging ? 10 : 0,
+    opacity: isDragging ? 0.8 : 1, // Fade out the dragged item slightly
   };
 
   return (
-    <div className="background-gray-200">
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className={`border p-2 rounded-lg bg-gray-100 hover:shadow-md ${
-          isDragging ? "cursor-grabbing" : "cursor-grab"
-        }`}
-      >
-        <img
-          src={item.imageUrl}
-          alt={`Image ${id}`}
-          className="w-full h-auto object-cover rounded"
-        />
-        <p className="text-center text-sm mt-2">{item.createdAt}</p>
-      </div>
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`p-2 bg-gray-200 rounded-lg shadow-lg ${
+        isDragging ? "cursor-grabbing" : "cursor-grab"
+      }`}
+    >
+      <img
+        src={item.imageUrl}
+        alt={`Image ${id}`}
+        className=" h-[200px] w-[200px] object-cover rounded"
+      />
+      <p className="text-left px-2 mt-2 font-handwriting text-md font-semibold">
+        {isDragging ? "moving" : `${index + 1}.`}
+      </p>
     </div>
   );
 };

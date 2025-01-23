@@ -1,5 +1,6 @@
 import React, { useContext, createContext, useState } from "react";
 import { getTheme } from "./themeConfig";
+import testData from "./Components/testData"
 
 const GameContext = createContext();
 
@@ -12,8 +13,6 @@ export const GameProvider = ({ children }) => {
   const [orderedGameSet, setOrderedGameSet] = useState([]);
   const [score, setScore] = useState(0);
   const [hints, setHints] = useState([]);
-
-  console.log("all images:", allImages)
 
   // set shuffled set of up to 10 images
   const playGame = (allImages) => {
@@ -33,6 +32,25 @@ export const GameProvider = ({ children }) => {
   
     setShuffledGameSet(shuffledGameSet); 
     setOrderedGameSet(orderedGameSet);  
+    setGameState("playing");
+  }
+
+  // compare shuffled set and ordered set
+  const submitGame = (submittedSet) => {
+    // Check if every element in the shuffledGameSet matches the orderedGameSet
+  const isSuccess = submittedSet.every(
+    (item, index) => item.id === orderedGameSet[index].id
+  );
+
+  if (isSuccess) {
+    console.log("Game success! You matched the order.");
+    // Additional success logic can go here (e.g., show a success message or trigger a new round)
+  } else {
+    console.log("Game failed. Try again.");
+    // Additional failure logic can go here
+  }
+
+  return isSuccess;
   }
   
   // Function to reset the game
@@ -72,7 +90,8 @@ export const GameProvider = ({ children }) => {
         playGame,
         shuffledGameSet,
         setShuffledGameSet,
-        orderedGameSet
+        orderedGameSet,
+        submitGame
       }}
     >
       {children}

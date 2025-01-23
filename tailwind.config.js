@@ -7,9 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // backgroundImage: {
-      //   "violet_evergarden": "var(--background-url)",
-      // }
+      screens: {
+        xs: "480px", // Example: Set `xs` to 480px
+      },
+      fontFamily: {
+        handwriting: ['"Patrick Hand"', 'cursive'], // Add the font here
+      },
     },
   },
   plugins: [],
