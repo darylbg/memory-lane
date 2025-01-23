@@ -5,8 +5,8 @@ import flash_icon from "../Assets/Icons/flash_icon.png";
 import ButtonComponent from "./Primitive Components/ButtonComponent";
 
 export default function TopBar() {
-  const { theme } = useGame();
-  console.log(theme);
+  const { theme, gameState } = useGame();
+  console.log("gamestate:", gameState);
 
   const audio_ref = useRef(null);
 
@@ -21,16 +21,32 @@ export default function TopBar() {
     }
   };
 
+  const textLeft = (gameState) => {
+    switch (gameState) {
+      case "not_started":
+        return <span></span>;
+        break;
+    case "playing":
+      return <span>ARRANGE IN ORDER</span>;
+      default:
+        return <span></span>;
+    }
+  }
   return (
     <div className="flex justify-between">
-      <div>some random text</div>
+      <div>
+        {textLeft(gameState)}
+      </div>
       <div className="flex gap-5">
         <ButtonComponent
           text="HINT"
           icon={flash_icon}
           custom_class="thirdary-button large-box-shadow"
         />
-        <button onClick={toggleAudio} className="bg-white rounded p-1 h-fit group large-box-shadow">
+        <button
+          onClick={toggleAudio}
+          className="bg-white rounded p-1 h-fit group large-box-shadow"
+        >
           <audio id="background_music" ref={audio_ref} loop autoPlay>
             {theme?.audio_tracks.map((track, index) => {
               console.log(track);
@@ -41,7 +57,6 @@ export default function TopBar() {
             src={speaker_icon}
             alt="speaker icon"
             className="scale-x-[-1] h-[30px] w-[30px] transition-transform duration-200 ease-in-out group-hover:scale-x-[-1] group-hover:scale-[110%]"
-
           />
         </button>
       </div>

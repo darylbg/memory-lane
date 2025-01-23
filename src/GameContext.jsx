@@ -5,23 +5,36 @@ const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const [theme, setTheme] = useState(getTheme("violet_evergarden"));
+  // not_started, ready_to_play, playing, completed
   const [gameState, setGameState] = useState("not_started");
   const [allImages, setAllImages] = useState([]);
   const [shuffledGameSet, setShuffledGameSet] = useState([]);
-  const [orderedGameSet, SetOrderedGameSet] = useState([]);
+  const [orderedGameSet, setOrderedGameSet] = useState([]);
   const [score, setScore] = useState(0);
   const [hints, setHints] = useState([]);
 
+  console.log("all images:", allImages)
+
   // set shuffled set of up to 10 images
-  const setupGame = () => {
-    if (allImages.length <= 1) {
-      console.log("not enough images")
+  const playGame = (allImages) => {
+    if (!allImages || allImages.length === 0) {
+      console.warn("No images available to play the game.");
       return;
-    } else {
-      console.log("game start");
-      setGameState("playing");
     }
+  
+    const shuffledImages = [...allImages].sort(() => 0.5 - Math.random()); // Shuffle all images randomly
+    const selectedImages = shuffledImages.slice(0, Math.min(10, allImages.length)); // Take up to 10 images
+  
+    const shuffledGameSet = [...selectedImages].sort(() => 0.5 - Math.random());
+  
+    const orderedGameSet = [...selectedImages].sort((a, b) =>
+      new Date(a.createdAt) - new Date(b.createdAt)
+    );
+  
+    setShuffledGameSet(shuffledGameSet); 
+    setOrderedGameSet(orderedGameSet);  
   }
+  
   // Function to reset the game
   const resetGame = () => {
     setGameState("not_started");
@@ -56,7 +69,10 @@ export const GameProvider = ({ children }) => {
         setHints,
         resetGame,
         addHint,
-        setupGame
+        playGame,
+        shuffledGameSet,
+        setShuffledGameSet,
+        orderedGameSet
       }}
     >
       {children}

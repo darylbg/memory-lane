@@ -8,7 +8,7 @@ import ModalComponent from "./Primitive Components/ModalComponent";
 import { useGame } from "../GameContext";
 
 export default function GameWelcome() {
-  const { allImages, gameState, setupGame } = useGame();
+  const { allImages, gameState, playGame } = useGame();
 
   return (
     <ModalComponent>
@@ -39,7 +39,7 @@ export default function GameWelcome() {
         />
       </div>
       <NavLinkComponent
-        action={setupGame}
+        action={playGame(allImages)}
         disabled={allImages.length <= 1}
         rounded={true}
         text={allImages.length === 0 ? "UPLOAD PHOTOS TO PLAY" : allImages.length === 1 ? "ADD MORE PHOTOS TO PLAY" : "PLAY GAME" }
