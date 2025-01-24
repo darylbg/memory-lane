@@ -7,12 +7,11 @@ import GameThemes from "./Components/GameThemes";
 import GameComplete from "./Components/GameComplete";
 import GamePlay from "./Components/GamePlay";
 import GameWelcome from "./Components/GameWelcome";
-import BottomBar from "./Components/BottomBar";
 
 function App() {
   const { theme, switchTheme } = useGame();
   return (
-    <Router>
+
       <div
         className="h-dvh w-screen flex justify-center bg-no-repeat bg-cover bg-center overflow-x-hidden"
         style={{ backgroundImage: `url(${theme.background_image})` }}
@@ -29,11 +28,9 @@ function App() {
               <Route path="/complete" element={<GameComplete />} />
             </Routes>
           </div>
-          {/* bottom bar */}
-          <BottomBar />
         </div>
       </div>
-    </Router>
+
   );
 }
 

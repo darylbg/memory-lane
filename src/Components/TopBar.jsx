@@ -1,11 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useGame } from "../GameContext";
 import speaker_icon from "../Assets/Icons/speaker_icon.png";
 import flash_icon from "../Assets/Icons/flash_icon.png";
 import ButtonComponent from "./Primitive Components/ButtonComponent";
 
 export default function TopBar() {
-  const { theme, gameState } = useGame();
+  const { theme, gameState, shuffledGameSet, setShuffledGameSet, submitGame, hints } = useGame();
+  const [currentHintIndex, setCurrentHintIndex] = useState(0);
   console.log("gamestate:", gameState);
 
   const audio_ref = useRef(null);
@@ -19,6 +20,17 @@ export default function TopBar() {
     } else {
       audio.muted = true;
     }
+  };
+
+  const handleShowHint = () => {
+    if (hints.length === 0) {
+      alert("No hints available. Submit the game first to generate hints.");
+      return;
+    }
+
+    const hint = hints[currentHintIndex];
+    alert(hint); // Display the current hint
+    setCurrentHintIndex((prevIndex) => (prevIndex + 1) % hints.length); // Cycle through hints
   };
 
   const textLeft = (gameState) => {
@@ -39,6 +51,7 @@ export default function TopBar() {
       </div>
       <div className="flex gap-5">
         <ButtonComponent
+        action={handleShowHint}
           text="HINT"
           icon={flash_icon}
           custom_class="thirdary-button large-box-shadow"

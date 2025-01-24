@@ -39,10 +39,16 @@ export default function GameWelcome() {
         />
       </div>
       <NavLinkComponent
-        action={playGame(allImages)}
+        action={() => playGame(allImages)} // Pass a function reference instead of calling it
         disabled={allImages.length <= 1}
         rounded={true}
-        text={allImages.length === 0 ? "UPLOAD PHOTOS TO PLAY" : allImages.length === 1 ? "ADD MORE PHOTOS TO PLAY" : "PLAY GAME" }
+        text={
+          allImages.length === 0
+            ? "UPLOAD PHOTOS TO PLAY"
+            : allImages.length === 1
+            ? "ADD MORE PHOTOS TO PLAY"
+            : "PLAY GAME"
+        }
         to="/play"
         icon={play_icon}
         custom_class="secondary-button"

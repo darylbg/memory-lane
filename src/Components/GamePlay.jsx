@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -15,10 +15,21 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableItem } from "./SortableItem";
 import { useGame } from "../GameContext";
+import ButtonComponent from "./Primitive Components/ButtonComponent";
+import forward_icon from "../Assets/Icons/forward_icon.png";
 
 export default function GamePlay() {
-  const { shuffledGameSet, setShuffledGameSet, submitGame } = useGame();
-  const [activeId, setActiveId] = React.useState(null);
+  const {
+    shuffledGameSet,
+    setShuffledGameSet,
+    submitGame,
+    hints,
+    generateHints,
+    setHints
+  } = useGame();
+
+  const [activeId, setActiveId] = useState(null);
+  const [currentHintIndex, setCurrentHintIndex] = useState(0); // Track the current hint to display
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
@@ -33,22 +44,48 @@ export default function GamePlay() {
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-
+  
     if (over && active.id !== over.id) {
       const oldIndex = shuffledGameSet.findIndex((item) => item.id === active.id);
       const newIndex = shuffledGameSet.findIndex((item) => item.id === over.id);
-
-      setShuffledGameSet((items) => arrayMove(items, oldIndex, newIndex));
+  
+      // Update shuffled set
+      const newShuffledGameSet = arrayMove(shuffledGameSet, oldIndex, newIndex);
+      setShuffledGameSet(newShuffledGameSet);
+  
+      // Generate hints based on the updated shuffled set
+      const newHints = generateHints(newShuffledGameSet);
+      setHints(newHints); // Update the hints state
     }
+  
     setActiveId(null); // Reset active item after dragging
   };
+  
 
   const handleDragCancel = () => {
     setActiveId(null); // Handle drag cancellation
   };
 
+  const handleSubmit = () => {
+    const isCorrect = submitGame(shuffledGameSet);
+    if (isCorrect) {
+      alert("Congratulations! You matched the correct order.");
+    } else {
+      alert("Incorrect order. Try again or check hints.");
+    }
+  };
+
+  const handleShowHint = () => {
+    if (hints.length > 0) {
+      alert(hints[currentHintIndex]); // Show the current hint
+      setCurrentHintIndex((prevIndex) => (prevIndex + 1) % hints.length); // Cycle through hints
+    } else {
+      alert("No hints available. Submit the game to generate hints.");
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center py-10">
+    <div className="flex flex-col justify-center items-center pt-10 pb-2 gap-10">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -74,13 +111,21 @@ export default function GamePlay() {
               <img
                 src={activeItem.imageUrl}
                 alt={`Image ${activeItem.id}`}
-                className=" h-[200px] w-[200px] object-cover rounded"
+                className="h-[200px] w-[200px] object-cover rounded"
               />
               <p className="text-left px-2 font-handwriting text-md font-semibold mt-2">moving</p>
             </div>
           ) : null}
         </DragOverlay>
       </DndContext>
+      <div className="flex flex-col sm:flex-row w-full justify-end items-center gap-4">
+        <ButtonComponent
+          action={handleSubmit} // Pass handleSubmit here
+          custom_class="secondary-button"
+          text="SUBMIT GAME"
+          icon={forward_icon}
+        />
+      </div>
     </div>
   );
 }
