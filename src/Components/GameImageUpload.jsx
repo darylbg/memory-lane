@@ -110,7 +110,7 @@ export default function GameImageUpload() {
   return (
     <ModalComponent>
       <div className="flex items-center ">
-        <NavLinkComponent to="/" icon={back_icon} custom_class="back-button" />
+        <NavLinkComponent disabled={uploading} to="/" icon={back_icon} custom_class="back-button" />
         <h2 className="text-lg font-medium text-balance text-center translate-x-1/2">
           UPLOAD PHOTOS
         </h2>
@@ -203,6 +203,7 @@ export default function GameImageUpload() {
           <>
             <span className="self-center font-medium text-sm">or</span>
             <NavLinkComponent
+            disabled={uploading} 
               to="/"
               icon={continue_icon}
               text="CONTINUE TO PLAY"

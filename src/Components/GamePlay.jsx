@@ -17,6 +17,7 @@ import { SortableItem } from "./SortableItem";
 import { useGame } from "../GameContext";
 import ButtonComponent from "./Primitive Components/ButtonComponent";
 import forward_icon from "../Assets/Icons/forward_icon.png";
+import GameWelcome from "./GameWelcome";
 
 export default function GamePlay() {
   const {
@@ -25,7 +26,8 @@ export default function GamePlay() {
     submitGame,
     hints,
     generateHints,
-    setHints
+    setHints,
+    gameState
   } = useGame();
 
   const [activeId, setActiveId] = useState(null);
@@ -75,14 +77,9 @@ export default function GamePlay() {
     }
   };
 
-  const handleShowHint = () => {
-    if (hints.length > 0) {
-      alert(hints[currentHintIndex]); // Show the current hint
-      setCurrentHintIndex((prevIndex) => (prevIndex + 1) % hints.length); // Cycle through hints
-    } else {
-      alert("No hints available. Submit the game to generate hints.");
-    }
-  };
+  if (gameState !== "playing") {
+    return <GameWelcome />
+  }
 
   return (
     <div className="flex flex-col justify-center items-center pt-10 pb-2 gap-10">

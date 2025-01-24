@@ -63,6 +63,7 @@ body {
 .navlink-disabled {
   border: 3px solid gray;
   color: gray;
+  background-color: white;
 }
 
 .navlink-disabled:hover {
@@ -71,8 +72,15 @@ body {
   background-color: white;
 }
 
-.navlink-disabled:hover img {
+.navlink-disabled:hover img,
+.navlink-link-disabled:hover img {
   transform: scale(1) !important;
+}
+
+.navlink-link-disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+  background-color: white;
 }
 
 .large-box-shadow {
@@ -82,5 +90,9 @@ body {
 
 .polaroid-frame {
   background-image: url("./Assets//Images//polaroid-frame.png");
+}
+
+.text-outline {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 

@@ -10,7 +10,13 @@ export const GameProvider = ({ children }) => {
   const [allImages, setAllImages] = useState([]);
   const [shuffledGameSet, setShuffledGameSet] = useState([]);
   const [orderedGameSet, setOrderedGameSet] = useState([]);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState({
+    hints_used: 0,
+    time_elapsed: 0,
+    game_set_count: 0,
+    high_score: 0,
+  });
+  console.log(score);
   const [hints, setHints] = useState([]);
 
   const navigate = useNavigate();
@@ -35,7 +41,9 @@ export const GameProvider = ({ children }) => {
 
       if (item.id !== orderedGameSet[index]?.id) {
         newHints.push(
-          `Hint: The photo at position ${index + 1} should be at position ${correctIndex + 1}.`
+          `Hint: The photo at position ${index + 1} should be at position ${
+            correctIndex + 1
+          }.`
         );
       }
     });
@@ -49,23 +57,36 @@ export const GameProvider = ({ children }) => {
       return;
     }
 
-    const validImages = allImages.filter((image) => image && image.id && image.createdAt);
+    const validImages = allImages.filter(
+      (image) => image && image.id && image.createdAt
+    );
     if (validImages.length < 2) {
       console.warn("Not enough valid images to play.");
       return;
     }
 
     const shuffledImages = [...validImages].sort(() => 0.5 - Math.random());
-    const selectedImages = shuffledImages.slice(0, Math.min(10, validImages.length));
+    const selectedImages = shuffledImages.slice(
+      0,
+      Math.min(10, validImages.length)
+    );
 
     const shuffledGameSet = [...selectedImages].sort(() => 0.5 - Math.random());
-    const orderedGameSet = [...selectedImages].sort((a, b) =>
-      new Date(a.createdAt) - new Date(b.createdAt)
+    const orderedGameSet = [...selectedImages].sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
     );
 
     setShuffledGameSet(shuffledGameSet);
     setOrderedGameSet(orderedGameSet);
     setGameState("playing");
+
+    setScore((prevScore) => ({
+      ...prevScore,
+      game_set_count: shuffledGameSet.length,
+      time_elapsed: 0,
+      hints_used: 0
+
+    }));
   };
 
   const submitGame = (submittedSet) => {
@@ -93,9 +114,30 @@ export const GameProvider = ({ children }) => {
 
   const resetGame = () => {
     setGameState("not_started");
-    setScore(0);
+    setScore({
+      hints_used: 0,
+      time_elapsed: 0,
+      game_set_count: 0,
+      high_score: 0,
+    });
     setHints([]);
   };
+
+  useEffect(() => {
+    let timer;
+    if (gameState === "playing") {
+      timer = setInterval(() => {
+        setScore((prevScore) => ({
+          ...prevScore,
+          time_elapsed: prevScore.time_elapsed + 1,
+        }));
+      }, 1000); // Increment every second
+    } else {
+      clearInterval(timer);
+    }
+
+    return () => clearInterval(timer); // Cleanup on unmount or game state change
+  }, [gameState]);
 
   const switchTheme = (themeName) => {
     const selectedTheme = getTheme(themeName);
@@ -116,12 +158,13 @@ export const GameProvider = ({ children }) => {
         setScore,
         hints,
         setHints,
+        setScore,
         resetGame,
         playGame,
         generateHints,
         shuffledGameSet,
         setShuffledGameSet, // Keep the original setter
-        // setShuffledGameSetWithHints, 
+        // setShuffledGameSetWithHints,
         orderedGameSet,
         submitGame,
       }}
@@ -130,7 +173,6 @@ export const GameProvider = ({ children }) => {
     </GameContext.Provider>
   );
 };
-
 
 // Custom hook to use the GameContext
 export const useGame = () => {

@@ -61,7 +61,7 @@ export function NavLinkComponent({
       to={disabled ? "" : `${to}`}
       style={{ borderRadius: rounded ? "50px" : "4px" }}
       className={`group flex gap-2 h-fit justify-between items-center py-1 px-2 font-semibold ${custom_class} ${
-        disabled && "navlink-disabled"
+        disabled && text ? "navlink-disabled" : disabled ? "navlink-link-disabled" : ""
       }`}
     >
       {text}{" "}
