@@ -19,7 +19,7 @@ function App() {
         <div className="flex flex-1 flex-col p-2 max-w-screen-xl">
           {/* top bar */}
           <TopBar />
-          <div className="flex flex-1 flex-col justify-center py-2">
+          <div className="flex flex-1 flex-col justify-center pt-2 pb-10">
             <Routes>
               <Route path="" element={<GameWelcome />} />
               <Route path="/image-upload" element={<GameImageUpload />} />

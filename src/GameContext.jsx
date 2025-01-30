@@ -16,7 +16,7 @@ export const GameProvider = ({ children }) => {
     game_set_count: 0,
     high_score: 0,
   });
-  console.log(score);
+  // console.log(score);
   const [hints, setHints] = useState([]);
 
   const navigate = useNavigate();
@@ -100,11 +100,11 @@ export const GameProvider = ({ children }) => {
     );
 
     if (isSuccess) {
-      console.log("Game success! You matched the order.");
+      // console.log("Game success! You matched the order.");
       setGameState("completed");
       navigate("/complete");
     } else {
-      console.log("Game failed. Generating hints...");
+      // console.log("Game failed. Generating hints...");
       const newHints = generateHints(submittedSet);
       setHints(newHints);
     }
@@ -163,8 +163,7 @@ export const GameProvider = ({ children }) => {
         playGame,
         generateHints,
         shuffledGameSet,
-        setShuffledGameSet, // Keep the original setter
-        // setShuffledGameSetWithHints,
+        setShuffledGameSet, 
         orderedGameSet,
         submitGame,
       }}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonComponent from "./Primitive Components/ButtonComponent";
 import { NavLinkComponent } from "./Primitive Components/ButtonComponent";
 import check_icon from "../Assets/Icons/check_icon.png";
@@ -8,9 +8,17 @@ import { useGame } from "../GameContext";
 
 export default function GameThemes() {
   const { theme, switchTheme } = useGame();
-  const testButton = () => {
-    console.log("tested");
+
+  const randomTheme = () => {
+    const altThemes = [
+      "black_metal", "slutty", "euro_trash", "hardstyle"
+    ];
+  
+    const randomIndex = Math.floor(Math.random() * altThemes.length); // Proper random index generation
+    switchTheme(altThemes[randomIndex]); 
   };
+
+
   return (
     <ModalComponent>
       <div className="flex items-center ">
@@ -32,21 +40,51 @@ export default function GameThemes() {
           }`}
         />
         <ButtonComponent
-          text="HELLO KITTY"
-          action={() => switchTheme("hello_kitty")}
-          icon={theme.name === "hello_kitty" ? check_icon : null}
+          text="ONLY SABRINA/CHAPPELL"
+          action={() => switchTheme("sabrina_chappell")}
+          icon={theme.name === "sabrina_chappell" ? check_icon : null}
           custom_class={`${
-            theme.name === "hello_kitty"
+            theme.name === "sabrina_chappell"
               ? "primary-button-active"
               : "primary-button"
           }`}
         />
         <ButtonComponent
-          text="E-GIRL"
-          action={() => switchTheme("e_girl")}
-          icon={theme.name === "e_girl" ? check_icon : null}
+          text="(EMO)TIONALS"
+          action={() => switchTheme("emo")}
+          icon={theme.name === "emo" ? check_icon : null}
           custom_class={`${
-            theme.name === "e_girl" ? "primary-button-active" : "primary-button"
+            theme.name === "emo" ? "primary-button-active" : "primary-button"
+          }`}
+        />
+        <ButtonComponent
+          text="DABOOBADEEBIE"
+          action={() => switchTheme("beabadoobee")}
+          icon={theme.name === "beabadoobee" ? check_icon : null}
+          custom_class={`${
+            theme.name === "beabadoobee"
+              ? "primary-button-active"
+              : "primary-button"
+          }`}
+        />
+        <ButtonComponent
+          text="ANIME INTROS"
+          action={() => switchTheme("anime_intros")}
+          icon={theme.name === "anime_intros" ? check_icon : null}
+          custom_class={`${
+            theme.name === "anime_intros"
+              ? "primary-button-active"
+              : "primary-button"
+          }`}
+        />
+        <ButtonComponent
+          text="RANDOM THEME"
+          action={randomTheme}
+          icon={theme.name === "alt_theme" ? check_icon : null}
+          custom_class={`${
+            theme.name === "alt_theme"
+              ? "primary-button-active"
+              : "primary-button"
           }`}
         />
       </div>

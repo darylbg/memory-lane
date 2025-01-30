@@ -88,7 +88,7 @@ export default function GameImageUpload() {
       }
 
       // Display a message if files were rejected
-      console.log("refected count:", rejectedCount)
+      // console.log("refected count:", rejectedCount)
       if (rejectedCount === 1) {
         setUploadError(`${rejectedCount} Photo was not usable/duplicate.`);
       } else if (rejectedCount > 1) {

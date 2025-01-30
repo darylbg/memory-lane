@@ -13,16 +13,16 @@ import Carousel from "react-multi-carousel";
 export default function GameComplete() {
   const { orderedGameSet, allImages, gameState, playGame, score, setScore } =
     useGame();
-  console.log(orderedGameSet);
+  
 
   // Function to format the date
   const formatDate = (dateString) => {
-    const date = new Date(dateString); // Convert to Date object
+    const date = new Date(dateString); 
     return new Intl.DateTimeFormat("en-GB", {
       day: "2-digit",
       month: "short",
       year: "numeric",
-    }).format(date); // Format the date as "29 Apr 2023"
+    }).format(date); 
   };
 
   const calculateScore = (score) => {
@@ -38,7 +38,7 @@ export default function GameComplete() {
         high_score: total_score,
       }));
     }
-    console.log("total score", total_score);
+    // console.log("total score", total_score);
     return total_score;
   };
 
@@ -46,30 +46,10 @@ export default function GameComplete() {
     return <GameWelcome />;
   }
 
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
   return (
     <div className="flex flex-col gap-10 self-center">
       <div>
-        <div className="flex gap-5 justify-center max-w-full">
+        <div className="flex gap-5 justify-center max-w-full flex-wrap">
           {orderedGameSet?.map((item, index) => {
             return (
               <div
@@ -103,19 +83,19 @@ export default function GameComplete() {
         <div>
           <div>
             <span>HINTS USED: </span>
-            {score.hints_used}
+            <span className="font-medium">{score.hints_used}</span>
           </div>
           <div>
             <span>TIME ELAPSED: </span>
-            {score.time_elapsed}
+            <span className="font-medium">{score.time_elapsed}</span>
           </div>
           <div>
             <span>PHOTOS PLAYED: </span>
-            {score.game_set_count}
+            <span className="font-medium">{score.game_set_count}</span>
           </div>
           <div>
-            <span>TOTAL SCORE: </span>
-            {calculateScore(score)}
+            <span  className="font-medium">SCORE: </span>
+            <span className="font-medium">{calculateScore(score)}</span>
           </div>
         </div>
         <div className="flex flex-col gap-2">

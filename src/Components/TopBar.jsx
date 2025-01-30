@@ -1,35 +1,39 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useGame } from "../GameContext";
 import speaker_icon from "../Assets/Icons/speaker_icon.png";
+import delete_icon from "../Assets/Icons/delete_icon.png";
 import flash_icon from "../Assets/Icons/flash_icon.png";
 import ButtonComponent from "./Primitive Components/ButtonComponent";
-import GameWelcome from "./GameWelcome";
 
 export default function TopBar() {
-  const {
-    theme,
-    gameState,
-    score,
-    setScore,
-    shuffledGameSet,
-    setShuffledGameSet,
-    submitGame,
-    hints,
-  } = useGame();
+  const { theme, gameState, score, setScore, hints } = useGame();
   const [currentHintIndex, setCurrentHintIndex] = useState(0);
-  console.log("gamestate:", gameState);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [audioMuted, setAudioMuted] = useState(false);
 
   const audio_ref = useRef(null);
 
-  // Function to toggle audio on/off
-  const toggleAudio = () => {
-    console.log(audio_ref.current);
-    const audio = audio_ref.current;
-    if (audio.muted) {
-      audio.muted = false;
-    } else {
-      audio.muted = true;
+  // Select a random starting track on first render
+  useEffect(() => {
+    if (theme?.audio_tracks?.length > 0) {
+      const randomIndex = Math.floor(Math.random() * theme.audio_tracks.length);
+      setCurrentTrackIndex(randomIndex);
     }
+  }, [theme]);
+
+  // Function to toggle audio mute/unmute
+  const toggleAudio = () => {
+    if (audio_ref.current) {
+      audio_ref.current.muted = !audio_ref.current.muted;
+      setAudioMuted(!audioMuted);
+    }
+  };
+
+  // Function to play the next track when the current one ends
+  const playNextTrack = () => {
+    setCurrentTrackIndex(
+      (prevIndex) => (prevIndex + 1) % theme.audio_tracks.length
+    );
   };
 
   const handleShowHint = () => {
@@ -37,37 +41,41 @@ export default function TopBar() {
       alert("No hints available. Submit the game first to generate hints.");
       return;
     }
-
-    const hint = hints[currentHintIndex];
-    alert(hint); // Display the current hint
-    setCurrentHintIndex((prevIndex) => (prevIndex + 1) % hints.length); // Cycle through hints
-    // add to the hint_used score tally
+    alert(hints[currentHintIndex]);
+    setCurrentHintIndex((prevIndex) => (prevIndex + 1) % hints.length);
     setScore((prevScore) => ({
       ...prevScore,
       hints_used: prevScore.hints_used + 1,
     }));
   };
 
-  const textLeft = (gameState) => {
-    switch (gameState) {
-      case "not_started":
-        return <span></span>;
-        break;
-      case "playing":
-        return (
-          <span className="font-semibold text-white text-outline">
-            ARRANGE IN ORDER
-          </span>
-        );
-      default:
-        return <span></span>;
+  // youtube playlist
+  const iframeRef = useRef(null);
+  const [muted, setMuted] = useState(false);
+
+  useEffect(() => {
+    setMuted(false);
+  }, [theme])
+
+  // Function to toggle mute/unmute
+  const toggleMute = () => {
+    if (iframeRef.current) {
+      iframeRef.current.contentWindow.postMessage(
+        `{"event":"command","func":"${muted ? "unMute" : "mute"}","args":""}`,
+        "*"
+      );
+      setMuted(!muted);
     }
   };
 
   return (
     <div className="flex justify-between items-center">
       <div className="flex flex-col justify-between">
-        {textLeft(gameState)}
+        {gameState === "playing" && (
+          <span className="font-semibold text-white text-outline">
+            ARRANGE IN ORDER
+          </span>
+        )}
         {score.high_score !== 0 && (
           <span className="block sm:hidden font-semibold text-white text-outline">
             BEST SCORE: {score.high_score}
@@ -89,20 +97,28 @@ export default function TopBar() {
           />
         )}
         <button
-          onClick={toggleAudio}
-          className="bg-white rounded p-1 h-fit group large-box-shadow"
+          onClick={toggleMute}
+          className="bg-white rounded p-1 h-fit group large-box-shadow relative"
         >
-          <audio id="background_music" ref={audio_ref} loop autoPlay>
-            {theme?.audio_tracks.map((track, index) => {
-              console.log(track);
-              return <source src={track} type="audio/mpeg" key={index} />;
-            })}
-          </audio>
+          <iframe
+          ref={iframeRef}
+            width="0"
+            height="0"
+            src={`https://www.youtube.com/embed/videoseries?list=${theme.playlist_id}&autoplay=1&loop=1&enablejsapi=1`}
+            allow="autoplay; encrypted-media"
+          ></iframe>
           <img
             src={speaker_icon}
-            alt="speaker icon"
+            alt="audio on"
             className="scale-x-[-1] h-[30px] w-[30px] transition-transform duration-200 ease-in-out group-hover:scale-x-[-1] group-hover:scale-[110%]"
           />
+          {muted && (
+            <img
+              src={delete_icon}
+              alt="audio muted"
+              className="h-[17px] w-[17px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            />
+          )}
         </button>
       </div>
     </div>
