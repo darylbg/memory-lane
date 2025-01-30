@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.60ccdc63.css",
+    "main.js": "/static/js/main.2aed86ef.js",
+    "static/media/slutty.jpg": "/static/media/slutty.fd06428bad598d69e6d5.jpg",
+    "static/media/violet_evergarden.jpg": "/static/media/violet_evergarden.ed2a42d6680cbe67b552.jpg",
+    "static/media/hardstyle.jpg": "/static/media/hardstyle.f63ab4a1f21605e5dfce.jpg",
+    "static/media/Beabadoobee.jpg": "/static/media/Beabadoobee.b76ce2e1091de22454d0.jpg",
+    "static/media/euro_trash.jpg": "/static/media/euro_trash.0dd882ca1451dc5a93d9.jpg",
+    "static/media/sabrina_chappell.jpg": "/static/media/sabrina_chappell.4ac435a406fe8e430d1a.jpg",
+    "static/media/black_metal.jpg": "/static/media/black_metal.aa2e45b05c2f7d50820d.jpg",
+    "static/media/emo.jpg": "/static/media/emo.53e66f4de9a5d78acca9.jpg",
+    "static/media/anime_intros.jpg": "/static/media/anime_intros.66a4d27e39861f2d9809.jpg",
+    "static/media/check_icon.png": "/static/media/check_icon.98a1aeb26b874e58a2fb.png",
+    "static/media/play_icon.png": "/static/media/play_icon.853de5f681c12425bd4c.png",
+    "static/media/delete_icon.png": "/static/media/delete_icon.ffd01a54f76e80599bc0.png",
+    "static/media/settings_icon.png": "/static/media/settings_icon.4a360d80b6e2046670f6.png",
+    "static/media/images_icon.png": "/static/media/images_icon.990359da950e9f41a958.png",
+    "static/media/forward_icon.png": "/static/media/forward_icon.5f617126d6ae90313e8a.png",
+    "index.html": "/index.html",
+    "main.60ccdc63.css.map": "/static/css/main.60ccdc63.css.map",
+    "main.2aed86ef.js.map": "/static/js/main.2aed86ef.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.60ccdc63.css",
+    "static/js/main.2aed86ef.js"
+  ]
+}
