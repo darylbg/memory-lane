@@ -8,33 +8,18 @@ import ButtonComponent from "./Primitive Components/ButtonComponent";
 export default function TopBar() {
   const { theme, gameState, score, setScore, hints } = useGame();
   const [currentHintIndex, setCurrentHintIndex] = useState(0);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [audioMuted, setAudioMuted] = useState(false);
+  const iframeRef = useRef(null);
+  const [muted, setMuted] = useState(false);
+  const [randomStartIndex, setRandomStartIndex] = useState(0);
 
-  const audio_ref = useRef(null);
+  console.log(randomStartIndex)
 
-  // Select a random starting track on first render
   useEffect(() => {
-    if (theme?.audio_tracks?.length > 0) {
-      const randomIndex = Math.floor(Math.random() * theme.audio_tracks.length);
-      setCurrentTrackIndex(randomIndex);
-    }
+    // Generate a random start index (adjusting range based on expected playlist size)
+    const randomIndex = Math.floor(Math.random() * 20); // Assuming max 20 tracks
+    setRandomStartIndex(randomIndex);
+    setMuted(false);
   }, [theme]);
-
-  // Function to toggle audio mute/unmute
-  const toggleAudio = () => {
-    if (audio_ref.current) {
-      audio_ref.current.muted = !audio_ref.current.muted;
-      setAudioMuted(!audioMuted);
-    }
-  };
-
-  // Function to play the next track when the current one ends
-  const playNextTrack = () => {
-    setCurrentTrackIndex(
-      (prevIndex) => (prevIndex + 1) % theme.audio_tracks.length
-    );
-  };
 
   const handleShowHint = () => {
     if (hints.length === 0) {
@@ -49,15 +34,6 @@ export default function TopBar() {
     }));
   };
 
-  // youtube playlist
-  const iframeRef = useRef(null);
-  const [muted, setMuted] = useState(false);
-
-  useEffect(() => {
-    setMuted(false);
-  }, [theme])
-
-  // Function to toggle mute/unmute
   const toggleMute = () => {
     if (iframeRef.current) {
       iframeRef.current.contentWindow.postMessage(
@@ -101,10 +77,11 @@ export default function TopBar() {
           className="bg-white rounded p-1 h-fit group large-box-shadow relative"
         >
           <iframe
-          ref={iframeRef}
+            title="player"
+            ref={iframeRef}
             width="0"
             height="0"
-            src={`https://www.youtube.com/embed/videoseries?list=${theme.playlist_id}&autoplay=1&loop=1&enablejsapi=1`}
+            src={`https://www.youtube.com/embed/videoseries?list=${theme.playlist_id}&autoplay=1&loop=1&enablejsapi=1&index=${randomStartIndex}`}
             allow="autoplay; encrypted-media"
           ></iframe>
           <img

@@ -1,7 +1,6 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import polaroid_frame from "../Assets/Images/polaroid-frame.png";
 
 export const SortableItem = ({ id, item, index }) => {
   const {

@@ -1,5 +1,4 @@
 import React from "react";
-import ButtonComponent from "./Primitive Components/ButtonComponent";
 import { NavLinkComponent } from "./Primitive Components/ButtonComponent";
 import settings_icon from "../Assets/Icons/settings_icon.png";
 import images_icon from "../Assets/Icons/images_icon.png";
@@ -8,7 +7,7 @@ import ModalComponent from "./Primitive Components/ModalComponent";
 import { useGame } from "../GameContext";
 
 export default function GameWelcome() {
-  const { allImages, gameState, playGame } = useGame();
+  const { allImages, playGame } = useGame();
 
   return (
     <ModalComponent>

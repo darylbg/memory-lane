@@ -155,7 +155,6 @@ export const GameProvider = ({ children }) => {
         allImages,
         setAllImages,
         score,
-        setScore,
         hints,
         setHints,
         setScore,

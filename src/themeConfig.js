@@ -53,13 +53,13 @@ const themes = {
   euro_trash: {
     name: "alt_theme",
     background_image:
-      "https://i.guim.co.uk/img/media/cccd94137def1cb1a8242fa8526012b11c92049f/0_18_1747_1048/master/1747.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=f5e36bb173527368be437290cf82a457",
+      euro_trash,
     playlist_id: "PLoonmGhV9oWHfhtZ6yuShRcu0VoxMYD1n",
   },
   hardstyle: {
     name: "alt_theme",
     background_image:
-      euro_trash,
+      hardstyle,
     playlist_id: "PLiiWa3UiP4H1PlmPY1FlReILnYZ4oM4cL",
   },
 };

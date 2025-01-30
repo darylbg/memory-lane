@@ -88,10 +88,6 @@ body {
   hsl(206 22% 7% / 20%) 0px 0px 20px -15px;
 }
 
-.polaroid-frame {
-  background-image: url("./Assets//Images//polaroid-frame.png");
-}
-
 .text-outline {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

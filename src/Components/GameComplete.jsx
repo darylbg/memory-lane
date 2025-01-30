@@ -2,13 +2,10 @@ import React from "react";
 import ModalComponent from "../Components/Primitive Components/ModalComponent";
 import { useGame } from "../GameContext";
 import GameWelcome from "./GameWelcome";
-import ButtonComponent from "./Primitive Components/ButtonComponent";
 import { NavLinkComponent } from "./Primitive Components/ButtonComponent";
 import settings_icon from "../Assets/Icons/settings_icon.png";
 import images_icon from "../Assets/Icons/images_icon.png";
 import play_icon from "../Assets/Icons/play_icon.png";
-import Slider from "react-slick";
-import Carousel from "react-multi-carousel";
 
 export default function GameComplete() {
   const { orderedGameSet, allImages, gameState, playGame, score, setScore } =
